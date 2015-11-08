@@ -241,11 +241,11 @@ def category_wrapper(id):
 
 
 @app.route('/v1/categories/<id>/relationships/<related_collection_name>', methods=['POST', 'PATCH', 'DELETE', 'GET'])
-def user_relationships_wrapper(id, related_collection_name):
+def category_relationships_wrapper(id, related_collection_name):
     """Methods related to user relationships"""
 
     @authenticate(AuthenticationLevels.ADMIN)  # All methods require user perform the action on themselves
-    def user_relationships():
+    def category_relationships():
         response = None
         if request.method == 'POST':
             response = Category.create_relationships(id, related_collection_name, eval(request.data))
@@ -256,7 +256,7 @@ def user_relationships_wrapper(id, related_collection_name):
         elif request.method == 'GET':
             response = Category.get_relationship(request.args, id, related_collection_name)
         return response
-    return user_relationships()
+    return category_relationships()
 
 
 # ERROR HANDLING########################################################################################################

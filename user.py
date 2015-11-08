@@ -12,6 +12,13 @@ from neomodel import (StringProperty, AliasProperty, RelationshipTo, Relationshi
 from neoapi import SerializableStructuredNode, SerializableStructuredRel, DateTimeProperty
 
 
+def generate_user_id():
+    """Creates a fun and quite probably unique user id."""
+    return "{fn}-{mn}-{ln}{no}".format(
+        fn=names.get_first_name(), mn=names.get_last_name(), ln=names.get_last_name,no=str(random.randint(10, 99))
+    )
+
+
 class User(SerializableStructuredNode):
     """
     User
@@ -31,12 +38,7 @@ class User(SerializableStructuredNode):
     events = RelationshipTo('category.Event', 'GOING_TO', cardinality=OneOrMore,
                               model=SerializableStructuredRel)
 
-    @staticmethod
-    def generate_user_id():
-        """Creates a fun and quite probably unique user id."""
-        return "{fn}-{mn}-{ln}{no}".format(
-            fn=names.get_first_name(), mn=names.get_last_name(), ln=names.get_last_name,no=str(random.randint(10, 99))
-        )
+
 
 
 
