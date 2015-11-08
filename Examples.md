@@ -22,12 +22,12 @@ Create an administrative user.
 request data:
 ```json
 {
-   "data": {
-      "type": "users",
-      "attributes": {
-         "role": "ADMIN_ROLE"
-      }
-   }
+   "data": {
+      "type": "users",
+      "attributes": {
+         "role": "ADMIN_ROLE"
+      }
+   }
 }
 ```
 
