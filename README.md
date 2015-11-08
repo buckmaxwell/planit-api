@@ -1,6 +1,38 @@
 # PlanIt
 
-Hey team, welcome to the PlanIt API.  If you want to know how to use it, start with Examples.md.  
+Hey team, welcome to the PlanIt API.  If you want to know how to use it, start with Examples.md. Before that, configure
+your environment by following the getting started section.
+ 
+
+## Getting Started
+
+Before you begin do the following.
+
+ + Setup neo4j on your local machine.  Download it from neo4j.com and follow the instructions for your system.
+ + Run a neo4j server -- pick the defaults when setting up
+
+To test that neo4j is running go to http://localhost:7474 in your browser.  If it works, your up and running.
+
+Now do the following.
+
+```sh
+$ git clone https://github.com/buckmaxwell/planit-api.git
+$ cd planit-api
+$
+$ pip install virtualenv
+$ virtualenv venv
+$ source venv/bin/activate
+$
+$ pip install -r requirements.txt
+$
+$ export NEO4J_REST_URL=http://<neo4j_username>:<neo4j_password>@localhost:7474/db/data
+$
+$ python api.py
+```
+There ya go.  Hit localhost:10200/v1 in the browser to test it out.
+
+
+
 
 
 
@@ -26,3 +58,6 @@ Hey team, welcome to the PlanIt API.  If you want to know how to use it, start w
          . . . ...."' 
          .. . ."'      
         . 
+
+
+(c) 2015 PlanIt
