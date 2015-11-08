@@ -2,7 +2,7 @@ __author__ = 'Max Buck'
 __email__ = 'maxbuckdeveloper@gmail.com'
 __version__ = '1.0.0'
 
-from neomodel import (StringProperty, AliasProperty, RelationshipTo, Relationship, ZeroOrOne,
+from neomodel import (StringProperty, AliasProperty, RelationshipTo, Relationship, ZeroOrOne, One,
                       FloatProperty, ZeroOrMore, OneOrMore, IntegerProperty, RelationshipFrom)
 from neoapi import SerializableStructuredNode, SerializableStructuredRel, DateTimeProperty
 from uuid import uuid4
@@ -34,6 +34,7 @@ class Event(SerializableStructuredNode):
     number_going = IntegerProperty(default=0)
 
     # RELATIONSHIPS
-    category = RelationshipTo('category.Category', 'HAS_CATEGORY', cardinality=OneOrMore,
+    categories = RelationshipTo('category.Category', 'HAS_CATEGORY', cardinality=OneOrMore,
                               model=SerializableStructuredRel)
     users = RelationshipFrom('user.User', 'GOING_TO', cardinality=ZeroOrMore, model=SerializableStructuredRel)
+    owner = RelationshipTo('user.User', 'HAS_OWNER', cardinality=One, model=SerializableStructuredRel)

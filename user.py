@@ -5,6 +5,8 @@ import event
 import names
 import random
 from constants import UserRoles
+import event
+import category
 
 
 from neomodel import (StringProperty, AliasProperty, RelationshipTo, Relationship, ZeroOrOne,
@@ -15,7 +17,7 @@ from neoapi import SerializableStructuredNode, SerializableStructuredRel, DateTi
 def generate_user_id():
     """Creates a fun and quite probably unique user id."""
     return "{fn}-{mn}-{ln}{no}".format(
-        fn=names.get_first_name(), mn=names.get_last_name(), ln=names.get_last_name,no=str(random.randint(10, 99))
+        fn=names.get_first_name(), mn=names.get_last_name(), ln=names.get_last_name(),no=str(random.randint(10, 99))
     )
 
 
@@ -35,8 +37,11 @@ class User(SerializableStructuredNode):
     role = StringProperty(default=UserRoles.USER_ROLE)
 
     # RELATIONSHIPS
-    events = RelationshipTo('category.Event', 'GOING_TO', cardinality=OneOrMore,
+    events = RelationshipTo('event.Event', 'GOING_TO', cardinality=ZeroOrMore,
                               model=SerializableStructuredRel)
+    categories = RelationshipTo('category.Category', 'INTERESTED_IN', cardinality=ZeroOrMore,
+                                model=SerializableStructuredRel)
+
 
 
 

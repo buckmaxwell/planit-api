@@ -6,6 +6,7 @@ from neomodel import (StringProperty, AliasProperty, RelationshipTo, Relationshi
                       FloatProperty, ZeroOrMore, OneOrMore)
 from neoapi import SerializableStructuredNode, SerializableStructuredRel, DateTimeProperty
 import event  # not an unused import
+import user
 
 
 class Category(SerializableStructuredNode):
@@ -21,8 +22,9 @@ class Category(SerializableStructuredNode):
     # ATTRIBUTES -- NOTE: 'type' and 'id' are required for json api specification compliance
     type = StringProperty(default='categories')  # => required, unique name for model
     id = StringProperty(required=True, unique_index=True)  # => required
-    name = AliasProperty(to=id)
 
     # RELATIONSHIPS
-    events = RelationshipFrom('event.Event', 'HAS_CATEGORY', cardinality=OneOrMore, model=SerializableStructuredRel)
+    events = RelationshipFrom('event.Event', 'HAS_CATEGORY', cardinality=ZeroOrMore, model=SerializableStructuredRel)
+    users = RelationshipFrom('user.User', 'INTERESTED_IN', cardinality=ZeroOrMore, model=SerializableStructuredRel)
+
 

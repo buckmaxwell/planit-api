@@ -13,6 +13,7 @@ from user import User, UserRoles
 from event import Event
 from category import Category
 import json
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -37,7 +38,7 @@ def authenticate(level=AuthenticationLevels.ANY, user_id=None):
             with app.app_context():  # change the context in order to allow for use of request
                 try:  # fetch the user by id
                     token = request.headers['Authorization']
-                    the_user = User.nodes.get(id=token).user.single()  # fetch the user by id
+                    the_user = User.nodes.get(id=token)  # fetch the user by id
                     if level == AuthenticationLevels.ANY:
                         pass
                     if level == AuthenticationLevels.USER and the_user.id != user_id:
@@ -135,17 +136,46 @@ def event_wrapper(id):
     response = None
 
     try:
-        event_creator = Event.nodes.get(id=id).single().user.id
+        event_creator = Event.nodes.get(id=id).single().owner.id
     except DoesNotExist:
         event_creator = None
 
     @authenticate(AuthenticationLevels.EVENT_CREATOR)
     def post_event():
-        return Event.create_resource(eval(request.data))
+        req_data = eval(request.data)
+        try:  # convert dates to datetime format
+            st = req_data['data']['attributes'].get('start_time')
+            et = req_data['data']['attributes'].get('end_time')
+            # set the owner
+            req_data['data']['relationships']['owner'] = dict()
+            req_data['data']['relationships']['owner']['data'] = {'id': request.headers['Authorization'], 'type': 'users'}
+            if st:
+                req_data['data']['attributes']['start_time'] = datetime.strptime(st, '%Y-%m-%d %H:%M:%S')
+            if et:
+                req_data['data']['attributes']['end_time'] = datetime.strptime(et, '%Y-%m-%d %H:%M:%S')
+
+            print req_data
+
+        except KeyError:
+            return application_codes.error_response([application_codes.BAD_FORMAT_VIOLATION])
+
+        # set the owner
+
+        return Event.create_resource(req_data)
 
     @authenticate(AuthenticationLevels.USER, event_creator)  # user who created the event only one allowed to update it
     def patch_event():
-        return Event.update_resource(eval(request.data), id)
+        req_data = eval(request.data)
+        try:  # convert dates to datetime format
+            st = req_data['data']['attributes'].get('start_time')
+            et = req_data['data']['attributes'].get('end_time')
+            if st:
+                req_data['data']['attributes']['start_time'] = datetime.strptime(st, '%Y-%m-%d %H:%M:%S')
+            if et:
+                req_data['data']['attributes']['start_time'] = datetime.strptime(st, '%Y-%m-%d %H:%M:%S')
+        except KeyError:
+            pass
+        return Event.update_resource(req_data, id)
 
     @authenticate(AuthenticationLevels.USER, event_creator)
     def delete_event():
@@ -208,6 +238,7 @@ def category_wrapper(id):
 
     @authenticate(AuthenticationLevels.ADMIN)
     def post_category():
+        print eval(request.data)
         return Category.create_resource(eval(request.data))
 
     @authenticate(AuthenticationLevels.ADMIN)

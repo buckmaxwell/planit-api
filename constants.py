@@ -13,5 +13,5 @@ class AuthenticationLevels(object):
 class UserRoles(object):
     EVENT_CREATOR_ROLE = "EVENT_CREATOR_ROLE"
     USER_ROLE = "USER_ROLE"
-    ADMIN_ROLE = "ADMIN"
+    ADMIN_ROLE = "ADMIN_ROLE"
 
