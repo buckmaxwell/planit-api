@@ -136,7 +136,7 @@ def event_wrapper(id):
     response = None
 
     try:
-        event_creator = Event.nodes.get(id=id).single().owner.id
+        event_creator = Event.nodes.get(id=id).owner.single().id
     except DoesNotExist:
         event_creator = None
 
@@ -153,8 +153,6 @@ def event_wrapper(id):
                 req_data['data']['attributes']['start_time'] = datetime.strptime(st, '%Y-%m-%d %H:%M:%S')
             if et:
                 req_data['data']['attributes']['end_time'] = datetime.strptime(et, '%Y-%m-%d %H:%M:%S')
-
-            print req_data
 
         except KeyError:
             return application_codes.error_response([application_codes.BAD_FORMAT_VIOLATION])
@@ -238,7 +236,6 @@ def category_wrapper(id):
 
     @authenticate(AuthenticationLevels.ADMIN)
     def post_category():
-        print eval(request.data)
         return Category.create_resource(eval(request.data))
 
     @authenticate(AuthenticationLevels.ADMIN)
