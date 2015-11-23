@@ -31,6 +31,7 @@ class Event(SerializableStructuredNode):
     address = StringProperty()
     lon = FloatProperty()
     lat = FloatProperty()
+    link = StringProperty()
     number_going = IntegerProperty(default=0)
 
     # RELATIONSHIPS
