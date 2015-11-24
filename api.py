@@ -188,7 +188,20 @@ def event_wrapper(id):
     def get_event_collection():
         "Hacky ass endpoint.  This will incorporated into get_resource the get_event endpoint"
         resp =  Event.get_collection(request.args)
-        print resp.data
+        cat_list = request.args.get('category_list', '[]')
+        cat_list = eval(cat_list)  # expects type list
+        resp_data = eval(resp.get_data())
+        resp_data_temp = resp_data
+        for i, event in enumerate(resp_data_temp['data']):
+            remove_event = True
+            for category in event['data']['relationships']['categories']['data']:
+                if category['id'] in cat_list:
+                    remove_event = False
+            if remove_event:
+                del resp_data['data'][i]
+
+        resp.set_data(json.dumps(resp_data))
+
         return resp
 
     # pick method to execute
