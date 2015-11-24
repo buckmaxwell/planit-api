@@ -192,16 +192,16 @@ def event_wrapper(id):
         cat_list = eval(cat_list)  # expects type list
         resp_data = json.loads(resp.get_data())
         resp_data_temp = resp_data
+        good_events = []
         for i, event in enumerate(resp_data_temp['data']):
             remove_event = True
             for category in event['relationships']['categories']['data']:
                 if category['id'] in cat_list:
                     remove_event = False
-                    print "do not remove"
-            if remove_event:
-                print "i am here"
-                print resp_data['data'][i]
-                del resp_data['data'][i]
+            if not remove_event:
+                good_events.append(event)
+
+        resp_data['data'] = good_events
 
         resp.set_data(json.dumps(resp_data))
 
