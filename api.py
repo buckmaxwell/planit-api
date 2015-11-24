@@ -193,11 +193,17 @@ def event_wrapper(id):
         resp_data = json.loads(resp.get_data())
         resp_data_temp = resp_data
         for i, event in enumerate(resp_data_temp['data']):
+            print 'yo'
+            print event
             remove_event = True
             print event['data']
+            print 'yp'
             print event['data']['relationships']
+            print 'ddd'
             print event['data']['relationships']['categories']
+            print 'ffd'
             print event['data']['relationships']['categories']['data']
+            print 'asfsdfs'
             for category in event['data']['relationships']['categories']['data']:
                 if category['id'] in cat_list:
                     remove_event = False
