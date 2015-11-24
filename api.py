@@ -184,6 +184,7 @@ def event_wrapper(id):
         "Hacky ass endpoint.  This will incorporated into get_resource the get_event endpoint"
         resp = Event.get_resource(request.args, id)
         print resp
+        return resp
 
     @authenticate()
     def get_event_collection():
