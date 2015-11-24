@@ -188,7 +188,7 @@ def event_wrapper(id):
     def get_event_collection():
         "Hacky ass endpoint.  This will incorporated into get_resource the get_event endpoint"
         resp =  Event.get_collection(request.args)
-        print resp
+        print resp.data
         return resp
 
     # pick method to execute
