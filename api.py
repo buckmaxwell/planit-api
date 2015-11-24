@@ -197,6 +197,7 @@ def event_wrapper(id):
             for category in event['relationships']['categories']['data']:
                 if category['id'] in cat_list:
                     remove_event = False
+                    print "do not remove"
             if remove_event:
                 del resp_data['data'][i]
 
