@@ -194,9 +194,11 @@ def event_wrapper(id):
         resp_data_temp = resp_data
         for i, event in enumerate(resp_data_temp['data']):
             remove_event = True
-            print 'yup', event
+            print event['data']
+            print event['data']['relationships']
+            print event['data']['relationships']['categories']
+            print event['data']['relationships']['categories']['data']
             for category in event['data']['relationships']['categories']['data']:
-                print "yoooo"
                 if category['id'] in cat_list:
                     remove_event = False
             if remove_event:
