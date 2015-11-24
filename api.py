@@ -190,7 +190,7 @@ def event_wrapper(id):
         resp =  Event.get_collection(request.args)
         cat_list = request.args.get('category_list', '[]')
         cat_list = eval(cat_list)  # expects type list
-        resp_data = eval(resp.get_data())
+        resp_data = json.loads(resp.get_data())
         resp_data_temp = resp_data
         for i, event in enumerate(resp_data_temp['data']):
             remove_event = True
