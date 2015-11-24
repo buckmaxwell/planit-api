@@ -200,6 +200,7 @@ def event_wrapper(id):
                     print "do not remove"
             if remove_event:
                 print "i am here"
+                print resp_data['data'][i]
                 del resp_data['data'][i]
 
         resp.set_data(json.dumps(resp_data))
