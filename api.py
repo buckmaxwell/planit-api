@@ -2,6 +2,10 @@ __author__ = 'Max Buck'
 __email__ = 'maxbuckdeveloper@gmail.com'
 __version__ = '1.0.0'
 
+
+#graphenedb_url = os.environ.get("GRAPHENEDB_URL", "http://localhost:7474/")
+#os.environ["NEO_4J_REST_URL"] = graphenedb_url + "/db/data"
+
 import planit_appcodes
 from neoapi import application_codes
 import planit_error
@@ -15,8 +19,10 @@ from category import Category
 import json
 from datetime import datetime
 
-app = Flask(__name__)
 
+import  os
+
+app = Flask(__name__)
 
 # API CHECK#############################################################################################################
 

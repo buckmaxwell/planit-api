@@ -25,7 +25,7 @@ $ source venv/bin/activate
 $
 $ pip install -r requirements.txt
 $
-$ export NEO4J_REST_URL=http://app44498834:u0hWRbXtBC7HBxhbd2@app44498834.sb02.stations.graphenedb.com:24789/db/data
+$ export NEO4J_REST_URL=http://app44498834:u0hWRbZTXtBC7HBxhbd2@app44498834.sb02.stations.graphenedb.com:24789/db/data
 $
 $ python api.py
 ```
